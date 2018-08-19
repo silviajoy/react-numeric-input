@@ -1,0 +1,53 @@
+#input {
+    font-size: 25px;
+}
+
+.calculator {
+    display: flex;
+}
+
+.calculator-keys {
+    margin-right: 2em;
+}
+
+.numerickeys {
+    display: flex;
+    flex-direction: column;
+}
+
+.numerickeys-row {
+    display: flex;
+}
+
+.numericops {
+    display: flex;
+    flex-direction: column;
+}
+
+.numericops-row {
+    display: flex;
+}
+
+.numericops-lastrow {
+    display: flex;
+    align-items: center;
+}
+
+.numericops-lastrow .numerickeys-button {
+    margin: .3em 1.6em;
+}
+
+
+.numerickeys-button {
+    border: 2px solid;
+    border-radius: 10px;
+    height: 2em;
+    width: 2em;
+    display: flex;
+    margin: .3em;
+    cursor: pointer;
+}
+
+.numerickeys-button p {
+    margin: auto;
+}
