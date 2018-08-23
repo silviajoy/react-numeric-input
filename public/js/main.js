@@ -20451,9 +20451,34 @@ module.exports = require('./lib/React');
 var React = require("react");
 const NumericKeys = require('./NumericKeys.jsx');
 const NumericOps = require('./NumericOps.jsx');
+const ConfirmButton = require('./ConfirmButton.jsx');
+const CalculatorDisplay = require('./CalculatorDisplay.jsx');
 
 var Calculator = React.createClass({
     displayName: 'Calculator',
+
+    getInitialState() {
+        return {
+            currentValue: 0,
+            displayValue: 0
+        };
+    },
+
+    onKeyPressed(key) {
+        if (key === '<') {
+
+            this.setState({ displayValue: this.state.displayValue.slice(0, -1) });
+            return;
+        }
+
+        var newValue = key;
+
+        if (this.state.displayValue != '0' || key == '.') {
+            newValue = this.state.displayValue + '' + key;
+        }
+
+        this.setState({ displayValue: newValue });
+    },
 
     render: function () {
         return React.createElement(
@@ -20461,13 +20486,25 @@ var Calculator = React.createClass({
             { className: 'calculator' },
             React.createElement(
                 'div',
-                { className: 'calculator-keys' },
-                React.createElement(NumericKeys, null)
+                { className: 'calculator-display' },
+                React.createElement(CalculatorDisplay, { text: this.state.displayValue })
             ),
             React.createElement(
                 'div',
-                { className: 'calculator-operations' },
-                React.createElement(NumericOps, null)
+                { className: 'calculator-keyboard' },
+                React.createElement(NumericKeys, { onNumberClick: number => {
+                        this.onKeyPressed(number);
+                    } }),
+                React.createElement(
+                    'div',
+                    { className: 'calculator-right' },
+                    React.createElement(ConfirmButton, { confirmText: 'OK', onComplete: () => {
+                            this.props.onComplete(this.state.displayValue);
+                        } }),
+                    React.createElement(NumericOps, { onOperationClick: op => {
+                            this.onKeyPressed(op);
+                        } })
+                )
             )
         );
     }
@@ -20475,17 +20512,17 @@ var Calculator = React.createClass({
 
 module.exports = Calculator;
 
-},{"./NumericKeys.jsx":180,"./NumericOps.jsx":181,"react":177}],179:[function(require,module,exports){
+},{"./CalculatorDisplay.jsx":179,"./ConfirmButton.jsx":180,"./NumericKeys.jsx":183,"./NumericOps.jsx":184,"react":177}],179:[function(require,module,exports){
 var React = require("react");
 
-var NumericKeys = React.createClass({
-  displayName: "NumericKeys",
+var CalculatorDisplay = React.createClass({
+  displayName: "CalculatorDisplay",
 
   render: function () {
 
     return React.createElement(
       "div",
-      { className: "numerickeys-button" },
+      { className: "display" },
       React.createElement(
         "p",
         null,
@@ -20495,16 +20532,129 @@ var NumericKeys = React.createClass({
   }
 });
 
-module.exports = NumericKeys;
+module.exports = CalculatorDisplay;
 
 },{"react":177}],180:[function(require,module,exports){
 var React = require("react");
-var NumericButton = require("./NumericButton.jsx");
+
+var ConfirmButton = React.createClass({
+  displayName: "ConfirmButton",
+
+  render: function () {
+
+    return React.createElement(
+      "div",
+      { className: "confirmbutton", role: "button", onClick: () => {
+          this.props.onComplete('complete');
+        } },
+      React.createElement(
+        "p",
+        null,
+        this.props.confirmText
+      )
+    );
+  }
+});
+
+module.exports = ConfirmButton;
+
+},{"react":177}],181:[function(require,module,exports){
+var React = require("react");
+
+var KeyButton = React.createClass({
+  displayName: "KeyButton",
+
+  render: function () {
+
+    return React.createElement(
+      "div",
+      { className: "button", role: "button", onClick: () => {
+          this.props.onClick(this.props.text);
+        } },
+      React.createElement(
+        "p",
+        null,
+        this.props.text
+      )
+    );
+  }
+});
+
+module.exports = KeyButton;
+
+},{"react":177}],182:[function(require,module,exports){
+var React = require("react");
+const Calculator = require('./Calculator.jsx');
+
+var NumericInput = React.createClass({
+    displayName: "NumericInput",
+
+
+    getInitialState() {
+        return {
+            className: "dnone",
+            inputValue: 0
+        };
+    },
+
+    onFocus() {
+        this.setState({ className: "dflex" });
+    },
+
+    onComplete(text) {
+        var total = eval(text);
+        this.setState({ className: "dnone", inputValue: total });
+    },
+
+    render: function () {
+
+        return React.createElement(
+            "div",
+            { className: "numericinput" },
+            React.createElement("input", { id: this.props.id, type: "text", name: this.props.name, onFocus: this.onFocus, value: this.state.inputValue }),
+            React.createElement(
+                "label",
+                { htmlFor: this.props.id },
+                this.props.label
+            ),
+            React.createElement(
+                "div",
+                { className: "calculator-wrapper " + this.state.className },
+                React.createElement(Calculator, { onComplete: this.onComplete })
+            ),
+            React.createElement(
+                "h1",
+                null,
+                " aaaaaaaaaaaaaaaaaa "
+            )
+        );
+    }
+});
+
+module.exports = NumericInput;
+
+},{"./Calculator.jsx":178,"react":177}],183:[function(require,module,exports){
+var React = require("react");
+var KeyButton = require("./KeyButton.jsx");
 
 var NumericKeys = React.createClass({
     displayName: "NumericKeys",
 
     render: function () {
+
+        var leftKey = "<";
+        var rightKey = ".";
+
+        var keys = [];
+        var values = [1, 2, 3, 4, 5, 6, 7, 8, 9, leftKey, 0, rightKey];
+        for (var i = 0; i < values.length; i++) {
+            keys.push(React.createElement(KeyButton, { text: values[i], onClick: this.props.onNumberClick }));
+        }
+
+        var rows = [],
+            size = 3;
+
+        while (keys.length > 0) rows.push(keys.splice(0, size));
 
         return React.createElement(
             "div",
@@ -20512,30 +20662,22 @@ var NumericKeys = React.createClass({
             React.createElement(
                 "div",
                 { className: "numerickeys-row" },
-                React.createElement(NumericButton, { text: "1" }),
-                React.createElement(NumericButton, { text: "2" }),
-                React.createElement(NumericButton, { text: "3" })
+                rows[0]
             ),
             React.createElement(
                 "div",
                 { className: "numerickeys-row" },
-                React.createElement(NumericButton, { text: "4" }),
-                React.createElement(NumericButton, { text: "5" }),
-                React.createElement(NumericButton, { text: "6" })
+                rows[1]
             ),
             React.createElement(
                 "div",
                 { className: "numerickeys-row" },
-                React.createElement(NumericButton, { text: "7" }),
-                React.createElement(NumericButton, { text: "8" }),
-                React.createElement(NumericButton, { text: "9" })
+                rows[2]
             ),
             React.createElement(
                 "div",
                 { className: "numerickeys-row" },
-                React.createElement(NumericButton, { text: "" }),
-                React.createElement(NumericButton, { text: "0" }),
-                React.createElement(NumericButton, { text: "," })
+                rows[3]
             )
         );
     }
@@ -20543,14 +20685,25 @@ var NumericKeys = React.createClass({
 
 module.exports = NumericKeys;
 
-},{"./NumericButton.jsx":179,"react":177}],181:[function(require,module,exports){
+},{"./KeyButton.jsx":181,"react":177}],184:[function(require,module,exports){
 var React = require("react");
-var NumericButton = require("./NumericButton.jsx");
+var KeyButton = require("./KeyButton.jsx");
 
 var NumericOps = React.createClass({
   displayName: "NumericOps",
 
   render: function () {
+
+    var keys = [];
+    var values = ["+", "*", "-", "/"];
+    for (var i = 0; i < values.length; i++) {
+      keys.push(React.createElement(KeyButton, { text: values[i], onClick: this.props.onOperationClick }));
+    }
+
+    var rows = [],
+        size = 2;
+
+    while (keys.length > 0) rows.push(keys.splice(0, size));
 
     return React.createElement(
       "div",
@@ -20558,19 +20711,12 @@ var NumericOps = React.createClass({
       React.createElement(
         "div",
         { className: "numericops-row" },
-        React.createElement(NumericButton, { text: "+" }),
-        React.createElement(NumericButton, { text: "*" })
+        rows[0]
       ),
       React.createElement(
         "div",
         { className: "numericops-row" },
-        React.createElement(NumericButton, { text: "-" }),
-        React.createElement(NumericButton, { text: "/" })
-      ),
-      React.createElement(
-        "div",
-        { className: "numericops-lastrow" },
-        React.createElement(NumericButton, { text: "=" })
+        rows[1]
       )
     );
   }
@@ -20578,11 +20724,11 @@ var NumericOps = React.createClass({
 
 module.exports = NumericOps;
 
-},{"./NumericButton.jsx":179,"react":177}],182:[function(require,module,exports){
+},{"./KeyButton.jsx":181,"react":177}],185:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require("react-dom");
-var Calculator = require("./components/Calculator.jsx");
+var NumericInput = require("./components/NumericInput.jsx");
 
-ReactDOM.render(React.createElement(Calculator, null), document.getElementById("input"));
+ReactDOM.render(React.createElement(NumericInput, { id: "myinput", label: "number", name: "quantity" }), document.getElementById("input"));
 
-},{"./components/Calculator.jsx":178,"react":177,"react-dom":26}]},{},[182]);
+},{"./components/NumericInput.jsx":182,"react":177,"react-dom":26}]},{},[185]);

@@ -1,13 +1,58 @@
 #input {
-    font-size: 25px;
+    font-size: 24px;
+}
+
+.dnone {
+    display: none;
+}
+
+.dflex {
+    display: flex;
+}
+
+.calculator-wrapper {
+    position: absolute;
 }
 
 .calculator {
     display: flex;
+    flex-direction: column;
+    background-color: cyan;
+    width: 14.8em;
+    margin-left: 1em;
+    margin-top: 1em;
 }
 
-.calculator-keys {
-    margin-right: 2em;
+
+.calculator-keyboard {
+    display: flex;
+}
+
+.calculator-right {
+    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-content: space-between;
+}
+
+.calculator-operations {
+    flex: 1;
+}
+
+.calculator-display .display {
+    border: .08em solid;
+    border-radius: 10px;
+    height: 2em;
+    margin: 0.3em;
+    margin-bottom: 1em;
+    display: flex;
+}
+
+.calculator-display .display p {
+    margin: auto;
+    margin-right: 0.5em;
+    text-align: right;
 }
 
 .numerickeys {
@@ -22,24 +67,15 @@
 .numericops {
     display: flex;
     flex-direction: column;
+
 }
 
 .numericops-row {
     display: flex;
 }
 
-.numericops-lastrow {
-    display: flex;
-    align-items: center;
-}
-
-.numericops-lastrow .numerickeys-button {
-    margin: .3em 1.6em;
-}
-
-
-.numerickeys-button {
-    border: 2px solid;
+.numerickeys .button, .confirmbutton, .numericops .button {
+    border: .08em solid;
     border-radius: 10px;
     height: 2em;
     width: 2em;
@@ -48,6 +84,11 @@
     cursor: pointer;
 }
 
-.numerickeys-button p {
+.numerickeys .button p, .confirmbutton p, .numericops .button p{
     margin: auto;
+}
+
+.confirmbutton {
+    width: 4.76em;
+    margin-bottom: auto;
 }

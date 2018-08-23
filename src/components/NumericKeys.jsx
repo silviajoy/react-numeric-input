@@ -1,33 +1,39 @@
 var React = require("react");
-var NumericButton = require("./NumericButton.jsx")
+var KeyButton = require("./KeyButton.jsx")
 
 var NumericKeys = React.createClass({
   render: function() {
 
+    var leftKey = "<"
+    var rightKey = "."
+
+    var keys = []
+    var values = [1,2,3,4,5,6,7,8,9,leftKey,0,rightKey]
+    for (var i = 0; i < values.length; i++) {
+        keys.push(<KeyButton text={values[i]} onClick={this.props.onNumberClick} />)
+    }
+
+    var rows = [], size = 3;
+
+    while (keys.length > 0)
+        rows.push(keys.splice(0, size));
+
     return (
       <div className="numerickeys">
         <div className="numerickeys-row">
-            <NumericButton text="1"/>
-            <NumericButton text="2"/>
-            <NumericButton text="3"/>
+            {rows[0]}
         </div>
 
         <div className="numerickeys-row">
-            <NumericButton text="4"/>
-            <NumericButton text="5"/>
-            <NumericButton text="6"/>
+            {rows[1]}
         </div>
 
         <div className="numerickeys-row">
-            <NumericButton text="7"/>
-            <NumericButton text="8"/>
-            <NumericButton text="9"/>
+            {rows[2]}
         </div>
 
         <div className="numerickeys-row">
-            <NumericButton text=""/>
-            <NumericButton text="0"/>
-            <NumericButton text=","/>
+            {rows[3]}
         </div>
 
       </div>

@@ -1,5 +1,5 @@
 var React = require('react');
 var ReactDOM = require("react-dom");
-var Calculator = require("./components/Calculator.jsx");
+var NumericInput = require("./components/NumericInput.jsx");
 
-ReactDOM.render(<Calculator />, document.getElementById("input"));
+ReactDOM.render(<NumericInput id="myinput" label="number" name="quantity"/>, document.getElementById("input"));
