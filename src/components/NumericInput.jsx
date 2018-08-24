@@ -6,7 +6,8 @@ var NumericInput = React.createClass({
     getInitialState() {
         return {
             className: "dnone",
-            inputValue: 0,
+            inputValue: "",
+            displayValue: 0,
         };
     },
 
@@ -14,13 +15,29 @@ var NumericInput = React.createClass({
         this.setState({className:"dflex"})
     },
 
-    onComplete(text) {
-        var total = eval(text)
+    onComplete() {
+        var total = eval(this.state.displayValue)
         this.setState({className:"dnone", inputValue:total})  
     },
 
+    onChangeDisplay(val) {
+        if(val==='<') {
+
+            this.setState({displayValue: this.state.displayValue.slice(0,-1)});
+            return
+        }
+
+        var newValue = val
+
+        if(this.state.displayValue != '0' || val == '.') {
+            newValue = this.state.displayValue + '' + val
+        }
+
+        this.setState({displayValue:newValue})
+    },
+
     handleChange(event) {
-        this.setState({inputValue: event.target.value});
+        this.setState({inputValue: event.target.value, displayValue: event.target.value});
     },
 
     onBlur() {
@@ -33,6 +50,10 @@ var NumericInput = React.createClass({
 
     },
 
+    onClose() {
+        this.setState({className:"dnone"})
+    },
+
     render: function() {
 
         return (
@@ -40,9 +61,8 @@ var NumericInput = React.createClass({
                 <input id={this.props.id} type="number" name={this.props.name} onFocus={ this.onFocus } value={this.state.inputValue} onChange={this.handleChange} onBlur={this.onBlur} />
                 <label htmlFor={this.props.id}>{this.props.label}</label>
                 <div className={ "calculator-wrapper " + this.state.className } tabIndex="-1">
-                    <Calculator onComplete={ this.onComplete } />
+                    <Calculator onComplete={ this.onComplete } displayValue={this.state.displayValue} onChangeDisplay={this.onChangeDisplay} close={this.onClose} />
                 </div>
-                <h1> aaaaaaaaaaaaaaaaaa </h1>
             </div>
         );
     }

@@ -1,5 +1,5 @@
 var React = require('react');
 var ReactDOM = require("react-dom");
-var NumericInput = require("./components/NumericInput.jsx");
+var Form = require("./components/Form.jsx");
 
-ReactDOM.render(<NumericInput id="myinput" label="number" name="quantity"/>, document.getElementById("input"));
+ReactDOM.render(<div><Form /><h1> aaaaaaaaaaaaaaaaaa </h1></div>, document.getElementById("input"));
