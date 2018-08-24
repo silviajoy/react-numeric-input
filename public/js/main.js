@@ -20606,12 +20606,25 @@ var NumericInput = React.createClass({
         this.setState({ className: "dnone", inputValue: total });
     },
 
+    handleChange(event) {
+        this.setState({ inputValue: event.target.value });
+    },
+
+    onBlur() {
+        setTimeout(() => {
+            var active = document.activeElement;
+            if (!active.classList.contains("calculator-wrapper") || active.id == this.props.id) {
+                this.setState({ className: "dnone" });
+            }
+        }, 1);
+    },
+
     render: function () {
 
         return React.createElement(
             "div",
             { className: "numericinput" },
-            React.createElement("input", { id: this.props.id, type: "text", name: this.props.name, onFocus: this.onFocus, value: this.state.inputValue }),
+            React.createElement("input", { id: this.props.id, type: "number", name: this.props.name, onFocus: this.onFocus, value: this.state.inputValue, onChange: this.handleChange, onBlur: this.onBlur }),
             React.createElement(
                 "label",
                 { htmlFor: this.props.id },
@@ -20619,7 +20632,7 @@ var NumericInput = React.createClass({
             ),
             React.createElement(
                 "div",
-                { className: "calculator-wrapper " + this.state.className },
+                { className: "calculator-wrapper " + this.state.className, tabIndex: "-1" },
                 React.createElement(Calculator, { onComplete: this.onComplete })
             ),
             React.createElement(

@@ -14,6 +14,10 @@
     position: absolute;
 }
 
+.calculator-wrapper:focus {
+    border: 3px solid;
+}
+
 .calculator {
     display: flex;
     flex-direction: column;
