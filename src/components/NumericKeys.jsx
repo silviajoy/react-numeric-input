@@ -4,8 +4,8 @@ var KeyButton = require("./KeyButton.jsx")
 var NumericKeys = React.createClass({
   render: function() {
 
-    var leftKey = "<"
-    var rightKey = "."
+    var leftKey = "."
+    var rightKey = "<"
 
     var keys = []
     var values = [1,2,3,4,5,6,7,8,9,leftKey,0,rightKey]

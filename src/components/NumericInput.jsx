@@ -22,7 +22,6 @@ var NumericInput = React.createClass({
 
     onChangeDisplay(val) {
         if(val==='<') {
-
             this.setState({displayValue: this.state.displayValue.slice(0,-1)});
             return
         }
