@@ -81,7 +81,12 @@
     display: flex;
     background-color: #eee;
     overflow-x: auto;
+    /*
+    Overflow to left attempt
+    (flips math signs, so fix needed)
     direction: rtl;
+    unicode-bidi: embed;
+    */
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
