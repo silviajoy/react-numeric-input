@@ -1,14 +1,12 @@
-var React = require("react");
+const React = require("react");
 
-var CalculatorDisplay = React.createClass({
-  render: function() {
-
+const CalculatorDisplay = ({text}) => {
+    console.log(text)
     return (
       <div className="display">
-        <p>{this.props.text}</p>
+        <p>{text}</p>
       </div>
     )
-  }
-});
+};
 
 module.exports = CalculatorDisplay;

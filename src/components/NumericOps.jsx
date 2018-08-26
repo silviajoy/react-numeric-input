@@ -1,13 +1,12 @@
 var React = require("react");
 var KeyButton = require("./KeyButton.jsx")
 
-var NumericOps = React.createClass({
-  render: function() {
+var NumericOps = ({onOperationClick}) => {
 
     var keys = []
     var values = ["+","*","-","/"]
     for (var i = 0; i < values.length; i++) {
-        keys.push(<KeyButton text={values[i]} onClick={this.props.onOperationClick} />)
+        keys.push(<KeyButton text={values[i]} onClick={onOperationClick} />)
     }
 
     var rows = [], size = 2;
@@ -28,6 +27,5 @@ var NumericOps = React.createClass({
       </div>
     )
   }
-});
 
 module.exports = NumericOps;

@@ -1,16 +1,12 @@
-var React = require("react");
-var KeyButton = require("./KeyButton.jsx")
+const React = require("react");
+const KeyButton = require("./KeyButton.jsx")
 
-var NumericKeys = React.createClass({
-  render: function() {
-
-    var leftKey = "."
-    var rightKey = "<"
-
+const NumericKeys = ({onNumberClick, leftKey, rightKey}) => {
+    
     var keys = []
     var values = [1,2,3,4,5,6,7,8,9,leftKey,0,rightKey]
     for (var i = 0; i < values.length; i++) {
-        keys.push(<KeyButton text={values[i]} onClick={this.props.onNumberClick} />)
+        keys.push(<KeyButton text={values[i]} onClick={onNumberClick} />)
     }
 
     var rows = [], size = 3;
@@ -39,6 +35,5 @@ var NumericKeys = React.createClass({
       </div>
     )
   }
-});
 
 module.exports = NumericKeys;

@@ -1,14 +1,12 @@
 var React = require("react");
 
-var KeyButton = React.createClass({
-  render: function() {
+var KeyButton = ({onClick, text}) => {
 
     return (
-            <div className="button" role="button" onClick={() => {this.props.onClick(this.props.text)}}> 
-                <p>{this.props.text}</p>
+            <div className="button" role="button" onClick={() => {onClick(text)}}> 
+                <p>{text}</p>
             </div>
     )
-  }
-});
+}
 
 module.exports = KeyButton;

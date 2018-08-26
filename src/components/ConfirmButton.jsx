@@ -1,14 +1,12 @@
-var React = require("react");
+const React = require("react");
 
-var ConfirmButton = React.createClass({
-  render: function() {
+const ConfirmButton = ({onComplete, confirmText}) => {
 
     return (
-      <div className="confirmbutton" role="button" onClick={() => {this.props.onComplete('complete')}}>
-        <p>{this.props.confirmText}</p>
+      <div className="confirmbutton" role="button" onClick={() => {onComplete('complete')}}>
+        <p>{confirmText}</p>
       </div>
     )
-  }
-});
+}
 
 module.exports = ConfirmButton;

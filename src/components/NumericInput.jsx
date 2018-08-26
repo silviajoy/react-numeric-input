@@ -7,7 +7,7 @@ var NumericInput = React.createClass({
         return {
             className: "dnone",
             inputValue: "",
-            displayValue: 0,
+            displayValue: "0",
         };
     },
 
@@ -29,10 +29,13 @@ var NumericInput = React.createClass({
         var newValue = val
 
         if(this.state.displayValue != '0' || val == '.') {
-            newValue = this.state.displayValue + '' + val
+            // newValue = this.state.displayValue + '' + val
+            newValue = `${this.state.displayValue}${val}`;
+            console.log(newValue)
         }
 
         this.setState({displayValue:newValue})
+        setTimeout(() => {console.log(this.state.displayValue)}, 100)
     },
 
     handleChange(event) {
