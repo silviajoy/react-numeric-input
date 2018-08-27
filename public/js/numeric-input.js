@@ -20493,10 +20493,7 @@ var Calculator = function Calculator(_ref) {
             _react2.default.createElement(
                 'div',
                 { className: 'calculator-right' },
-                _react2.default.createElement(ConfirmButton, { confirmText: 'OK', onComplete: onComplete }),
-                _react2.default.createElement(NumericOps, { onOperationClick: function onOperationClick(op) {
-                        onChangeDisplay(op);
-                    } })
+                _react2.default.createElement(ConfirmButton, { confirmText: 'OK', onComplete: onComplete })
             )
         )
     );
