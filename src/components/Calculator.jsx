@@ -1,11 +1,10 @@
-const React = require("react");
+import React from 'react'
 const NumericKeys = require('./NumericKeys.jsx');
 const NumericOps = require('./NumericOps.jsx');
 const ConfirmButton = require('./ConfirmButton.jsx');
 const CalculatorDisplay = require('./CalculatorDisplay.jsx');
 
 const Calculator = ({close, displayValue, onChangeDisplay, onComplete}) => {
-    console.log(displayValue)
     return (
             <div className="calculator">
                 <div className="close" onClick={close}>

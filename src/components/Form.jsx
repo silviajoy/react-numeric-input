@@ -1,8 +1,5 @@
 var React = require("react");
 const NumericInput = require('./NumericInput.jsx');
-const NumericOps = require('./NumericOps.jsx');
-const ConfirmButton = require('./ConfirmButton.jsx');
-const CalculatorDisplay = require('./CalculatorDisplay.jsx');
 
 var Form = React.createClass({
 

@@ -1,7 +1,7 @@
-var React = require("react");
+const React = require("react");
 const Calculator = require('./Calculator.jsx');
 
-var NumericInput = React.createClass({
+const NumericInput = React.createClass({
     
     getInitialState() {
         return {
@@ -21,21 +21,34 @@ var NumericInput = React.createClass({
     },
 
     onChangeDisplay(val) {
+        var currentVal = this.state.displayValue
+        var newValue = val.toString()
+
+        /* delete */
         if(val==='<') {
-            this.setState({displayValue: this.state.displayValue.slice(0,-1)});
+            newValue = currentVal.slice(0,-1)
+            if(newValue == '') {
+                newValue = '0'
+            }
+            this.setState({displayValue: newValue})
             return
         }
 
-        var newValue = val
+        /* avoid double . insertion */
+        if(val==='.' && currentVal.includes(".")){
+            return
+        }
 
-        if(this.state.displayValue != '0' || val == '.') {
-            // newValue = this.state.displayValue + '' + val
-            newValue = `${this.state.displayValue}${val}`;
-            console.log(newValue)
+        /* if it's not the first character or if next value is . */
+        if(currentVal != '0' || val == '.') {
+            if(currentVal == '') {
+                newValue = `0${val}`
+            } else {
+                newValue = `${currentVal}${val}`;    
+            }
         }
 
         this.setState({displayValue:newValue})
-        setTimeout(() => {console.log(this.state.displayValue)}, 100)
     },
 
     handleChange(event) {

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "watchify src/numeric-input.jsx -v -t [ babelify --presets [ react ] ] -o public/js/numeric-input.js",
+    "start": "watchify src/numeric-input.jsx -v -t [ babelify --presets [ react es2015 ] ] -o public/js/numeric-input.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Ayvlis/react-skeleton#readme",
   "dependencies": {
     "babelify": "^7.3.0",
+    "prop-types": "^15.6.2",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "watchify": "^3.7.0"
